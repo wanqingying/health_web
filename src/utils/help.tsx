@@ -1,0 +1,86 @@
+import React, { useEffect, useContext, createContext } from "react";
+import { isEqual, cloneDeep, pick } from "lodash";
+import axios from "axios";
+import {RouteItem} from "../configs/routes";
+
+export const axo = axios.create({
+  withCredentials: true,
+  url: "http://localhost:3000",
+});
+
+class CtxState<T> {
+  state: T;
+  constructor(iniState: T) {
+    this.state = iniState;
+  }
+  updates: { fn: any; keys: string[] }[] = [];
+  update = (fn: (state: T) => any) => {
+    const preState = cloneDeep(this.state);
+    if (typeof fn === "function") {
+      fn(this.state);
+    }
+    this.updates.forEach((item) => {
+      const { fn, keys } = item;
+      if (Array.isArray(keys)) {
+        const pre = pick(preState, keys);
+        const next = pick(this.state, keys);
+        if (!isEqual(pre, next)) {
+          fn();
+        }
+      }
+    });
+  };
+}
+export function getCtx<T>(
+  iniState?: T
+): {
+  Provider: any;
+  useCtx: (
+    keys?: (keyof T)[]
+  ) => {
+    state: T;
+    update: (fn: (state: T) => T | any) => void;
+  };
+} {
+  const Ctx = createContext<CtxState<T>>({} as any);
+  function Provider(props: { value?:T,children?:any }) {
+    const state = new CtxState<T>(Object.assign({},iniState,props.value));
+    return <Ctx.Provider value={state}>{props.children}</Ctx.Provider>;
+  }
+  function useCtx(keys?: (keyof T)[]) {
+    const ctx = useContext(Ctx);
+    const [count, setCount] = React.useState(0);
+    const countRef = React.useRef(count);
+    const fnRef = React.useRef(function () {
+      setCount(countRef.current + 1);
+    });
+    countRef.current = count;
+    useEffect(
+      function () {
+        ctx.updates.push({ fn: fnRef.current, keys: keys as string[] });
+        return function () {
+          // eslint-disable-next-line
+          ctx.updates = ctx.updates.filter((item) => item.fn !== fnRef.current);
+        };
+      },
+        // eslint-disable-next-line
+        [fnRef.current]
+    );
+    return { state: ctx.state, update: ctx.update };
+  }
+  return { Provider, useCtx };
+}
+
+export function matchRoutePath(routes:RouteItem[],path:string,pre?:RouteItem[]):RouteItem[] {
+  const match=pre||[];
+  for (let i = 0; i < routes.length; i++) {
+    const r=routes[i];
+    if (r.path===path){
+      return [...match,r]
+    }
+    if (r.routes){
+      return matchRoutePath(r.routes,path,[...match,r])
+    }
+  }
+  return []
+}
