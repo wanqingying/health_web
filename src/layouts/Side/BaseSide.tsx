@@ -4,21 +4,20 @@ import { UserOutlined } from "@ant-design/icons";
 import { useBaseCtx } from "../../utils/base";
 import { RouteItem } from "../../configs/routes";
 import { Link } from "react-router-dom";
-import { useHistory } from 'react-router-dom';
-import {matchRoutePath} from "../../utils/help";
-
+import { useHistory } from "react-router-dom";
+import { matchRoutePath } from "../../utils/help";
 
 interface IProps {}
 export const BaseSide: FC<IProps> = function () {
   const { state } = useBaseCtx(["routes"]);
-  const history=useHistory();
-  const path=history.location.pathname;
-  const paths=matchRoutePath(state.routes,path)
+  const history = useHistory();
+  const path = history.location.pathname;
+  const paths = matchRoutePath(state.routes, path);
   return (
     <Menu
       mode="inline"
-      defaultSelectedKeys={paths.map(p=>p.path)}
-      defaultOpenKeys={paths.map(p=>p.path)}
+      defaultSelectedKeys={paths.map((p) => p.path)}
+      defaultOpenKeys={paths.map((p) => p.path)}
       style={{ height: "100%", borderRight: 0 }}
     >
       {getList(state.routes)}
@@ -29,7 +28,7 @@ export const BaseSide: FC<IProps> = function () {
 function getList(routes: RouteItem[]) {
   return routes
     .map((r) => {
-      if (r.component) {
+      if (r.component && r.label) {
         return (
           <Menu.Item key={r.path}>
             <Link to={r.path}>{r.label}</Link>
@@ -51,5 +50,3 @@ function getList(routes: RouteItem[]) {
     })
     .filter(Boolean);
 }
-
-

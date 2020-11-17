@@ -1,10 +1,8 @@
 import React, { Suspense } from "react";
 import ReactDOM from "react-dom";
 import "./index.css";
-import { BrowserRouter, Switch, Redirect, Route } from "react-router-dom";
+import { BrowserRouter, Switch, Redirect } from "react-router-dom";
 import { BaseLayoutRoute } from "./layouts/BaseLayoutRoute";
-// import React, { useState } from 'react';
-// import { render } from "react-dom";
 import { ConfigProvider } from "antd";
 // 由于 antd 组件的默认文案是英文，所以需要修改为中文
 import zhCN from "antd/lib/locale/zh_CN";
@@ -24,8 +22,8 @@ const App = function () {
   const routes = parse(state.routes);
   return (
     <Switch>
+      <Redirect exact={true} from={"/"} to={"/subscribe"} />
       <RouteSwitch routes={routes} />
-      <Redirect from={"/"} to={"/java"} />
     </Switch>
   );
 };

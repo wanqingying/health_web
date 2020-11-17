@@ -2,15 +2,19 @@ import { lazy } from "react";
 
 export interface RouteItem {
   path: string;
-  label: string;
+  label?: string;
   component?: any;
   routes?: RouteItem[];
   icon?: string;
   layout?: string;
-  redirect?:string
+  redirect?: string;
 }
 
 export const routeConfig: RouteItem[] = [
+  {
+    path: "/not_fount",
+    component: lazy(() => import("../pages/noPage")),
+  },
   {
     path: "/test",
     label: "测试",
@@ -53,4 +57,8 @@ export const routeConfig: RouteItem[] = [
       },
     ],
   },
+  // {
+  //   path: "/not_fount",
+  //   component: lazy(() => import("../pages/noPage")),
+  // },
 ];
