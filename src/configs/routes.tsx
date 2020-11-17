@@ -5,8 +5,9 @@ export interface RouteItem {
   label: string;
   component?: any;
   routes?: RouteItem[];
-  icon?:string
-  layout?:string
+  icon?: string;
+  layout?: string;
+  redirect?:string
 }
 
 export const routeConfig: RouteItem[] = [
@@ -23,6 +24,32 @@ export const routeConfig: RouteItem[] = [
         path: "/test/test_x",
         label: "测试x",
         component: lazy(() => import("../pages/test/TestX")),
+      },
+    ],
+  },
+  {
+    path: "/dashboard",
+    label: "工作台",
+    routes: [],
+  },
+  {
+    path: "/vip",
+    label: "会员管理",
+    routes: [],
+  },
+  {
+    path: "/subscribe",
+    label: "预约管理",
+    routes: [
+      {
+        path: "/subscribe/checks",
+        label: "检查项管理",
+        component: lazy(() => import("../pages/subscribe/checks")),
+      },
+      {
+        path: "/subscribe/test",
+        label: "测试",
+        component: lazy(() => import("../pages/subscribe/test")),
       },
     ],
   },

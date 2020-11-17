@@ -35,7 +35,7 @@ export const JavaWeb: FC<IProps> = function () {
             axo
               .post("/user/list", { users: [{ name: "xxx", age: 45 }] })
               .then((res) => {
-                console.log("res");
+                console.info("res");
               });
           }}
         >

@@ -1,7 +1,7 @@
 import React, { useEffect, useContext, createContext } from "react";
 import { isEqual, cloneDeep, pick } from "lodash";
 import axios from "axios";
-import {RouteItem} from "../configs/routes";
+import { RouteItem } from "../configs/routes";
 
 export const axo = axios.create({
   withCredentials: true,
@@ -43,8 +43,8 @@ export function getCtx<T>(
   };
 } {
   const Ctx = createContext<CtxState<T>>({} as any);
-  function Provider(props: { value?:T,children?:any }) {
-    const state = new CtxState<T>(Object.assign({},iniState,props.value));
+  function Provider(props: { value?: T; children?: any }) {
+    const state = new CtxState<T>(Object.assign({}, iniState, props.value));
     return <Ctx.Provider value={state}>{props.children}</Ctx.Provider>;
   }
   function useCtx(keys?: (keyof T)[]) {
@@ -63,24 +63,31 @@ export function getCtx<T>(
           ctx.updates = ctx.updates.filter((item) => item.fn !== fnRef.current);
         };
       },
-        // eslint-disable-next-line
-        [fnRef.current]
+      // eslint-disable-next-line
+      [fnRef.current]
     );
     return { state: ctx.state, update: ctx.update };
   }
   return { Provider, useCtx };
 }
 
-export function matchRoutePath(routes:RouteItem[],path:string,pre?:RouteItem[]):RouteItem[] {
-  const match=pre||[];
+export function matchRoutePath(
+  routes: RouteItem[],
+  path: string,
+  pre?: RouteItem[]
+): RouteItem[] {
+  const match = pre || [];
   for (let i = 0; i < routes.length; i++) {
-    const r=routes[i];
-    if (r.path===path){
-      return [...match,r]
+    const r = routes[i];
+    if (r.path === path) {
+      return [...match, r];
     }
-    if (r.routes){
-      return matchRoutePath(r.routes,path,[...match,r])
+    if (r.routes) {
+      const ms = matchRoutePath(r.routes, path, [...match, r]);
+      if (ms.length > 0) {
+        return ms;
+      }
     }
   }
-  return []
+  return [];
 }
