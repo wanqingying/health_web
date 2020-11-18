@@ -4,6 +4,7 @@ import { usePageCtx } from "@/pages/subscribe/checks/context";
 import { NewForm } from "./NewForm";
 import { CheckItem, IniCheckItem } from "@/pages/subscribe/checks/constants";
 import { addCheckItem } from "../services";
+import "./index.scss";
 
 interface IProps {
   style?: CSSProperties;
@@ -17,6 +18,8 @@ export const NewCheck: FC<IProps> = function (props) {
     <Modal
       visible={state.visible}
       title={state.data ? "编辑检查项" : "新增检查项"}
+      mask={true}
+      style={{ top: 40 }}
       onOk={() => {
         const vs = form.getFieldsValue();
         addCheckItem(vs).then((r) => {
