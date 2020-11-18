@@ -1,10 +1,9 @@
 import React, { CSSProperties, FC } from "react";
-import { Form, Modal } from "antd";
-import { useBaseCtx } from "@/utils/base";
+import { Form, Modal, message } from "antd";
 import { usePageCtx } from "@/pages/subscribe/checks/context";
 import { NewForm } from "./NewForm";
-import { CheckItem } from "@/pages/subscribe/checks/constants";
-import { test } from "../services";
+import { CheckItem, IniCheckItem } from "@/pages/subscribe/checks/constants";
+import { addCheckItem } from "../services";
 
 interface IProps {
   style?: CSSProperties;
@@ -20,8 +19,17 @@ export const NewCheck: FC<IProps> = function (props) {
       title={state.data ? "编辑检查项" : "新增检查项"}
       onOk={() => {
         const vs = form.getFieldsValue();
-        test(vs);
-        console.log("ok", vs);
+        addCheckItem(vs).then((r) => {
+          if (!r.flag) {
+            return message.error(r.message);
+          }
+          message.success(r.message);
+          update((s) => {
+            s.visible = false;
+            s.data = null;
+            s.updateList += 1;
+          });
+        });
       }}
       width={600}
       onCancel={() => {
@@ -30,7 +38,7 @@ export const NewCheck: FC<IProps> = function (props) {
         });
       }}
     >
-      <NewForm iniValues={{ name: "ss" } as any} form={form} />
+      <NewForm iniValues={IniCheckItem} form={form} />
     </Modal>
   );
 };

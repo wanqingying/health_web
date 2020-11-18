@@ -1,13 +1,8 @@
-import { axo } from "@/utils/help";
+import { axo, Result } from "@/utils/help";
+import { CheckItem } from "@/pages/subscribe/checks/constants";
 
-export function addItem(param: any) {
-  return axo.post("/checks/add", param).then((res) => {
-    console.log("res", res);
-  });
-}
-
-export function test(param:any) {
-  return axo.post("/checks/test", param).then((res) => {
-    console.log("test ", res);
+export function addCheckItem(param: CheckItem): Result<number> {
+  return axo.post("/checks/add?name=xh", param).then((res) => {
+    return res.data;
   });
 }

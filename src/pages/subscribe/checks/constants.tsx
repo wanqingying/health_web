@@ -9,6 +9,16 @@ export interface CheckItem {
   attention: string;
   remark: string;
 }
+export const IniCheckItem: CheckItem = {
+  code: "x_code",
+  name: "测试",
+  sex: 1,
+  age: 18,
+  price: 668,
+  type: 2,
+  attention: "五注意事项",
+  remark: "检查头皮屑",
+};
 
 export const CheckItemFields = {
   id: "id",

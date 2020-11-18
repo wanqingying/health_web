@@ -6,9 +6,11 @@ export const LayoutList = {
 export const ECheckTypesMap = new Map<number, string>();
 ECheckTypesMap.set(1, "检查");
 ECheckTypesMap.set(2, "检验");
-export const ECheckTypes = Array.from(ECheckTypesMap.entries()).map(([k, v]) => {
-  return { label: v, value: k };
-});
+export const ECheckTypes = Array.from(ECheckTypesMap.entries()).map(
+  ([k, v]) => {
+    return { label: v, value: k };
+  }
+);
 
 // 性别
 export const ESexTypeMap = new Map<number, string>();

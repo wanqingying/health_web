@@ -8,6 +8,15 @@ export const axo = axios.create({
   url: "http://localhost:3000",
 });
 
+export interface ResultX<T> {
+  data: T;
+  err: string;
+  flag: boolean;
+  message: string;
+}
+export type Result<T> = Promise<ResultX<T>>;
+export type Service<P, S> = (param:P) => Result<S>;
+
 class CtxState<T> {
   state: T;
   constructor(iniState: T) {
