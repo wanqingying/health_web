@@ -20,7 +20,7 @@ export const BaseLayout: FC<{}> = function (props) {
         <Sider width={200} className="site-layout-background">
           <BaseSide />
         </Sider>
-        <Layout style={{ padding: "0 24px 24px" }}>
+        <Layout style={{ padding: "0 24px 0 24px" }}>
           <BaseCrumb
             style={{
               height: h_bc,
@@ -36,7 +36,7 @@ export const BaseLayout: FC<{}> = function (props) {
               paddingTop: 24,
               margin: 0,
               minHeight: 280,
-              height: `calc(100vh - ${h_bc + h_header + 24 }px)`,
+              height: `calc(100vh - ${h_bc + h_header }px)`,
             }}
           >
             {props.children}
