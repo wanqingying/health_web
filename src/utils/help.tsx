@@ -15,7 +15,8 @@ export interface ResultX<T> {
   message: string;
 }
 export type Result<T> = Promise<ResultX<T>>;
-export type Service<P, S> = (param:P) => Result<S>;
+export type PageResult<T> = Promise<{ total: number; rows: Array<T> }>;
+export type Service<P, S> = (param: P) => Result<S>;
 
 class CtxState<T> {
   state: T;

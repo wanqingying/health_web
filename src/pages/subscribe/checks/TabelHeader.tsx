@@ -1,6 +1,6 @@
 import React, { CSSProperties, FC } from "react";
 import { Input, Button } from "antd";
-import { usePageCtx } from "@/pages/subscribe/checks/context";
+import { usePageCtx, useSearch } from "@/pages/subscribe/checks/context";
 
 const { Search } = Input;
 
@@ -9,7 +9,8 @@ interface IProps {
   className?: string;
 }
 export const TableHeader: FC<IProps> = function (props) {
-  const { state, update } = usePageCtx([]);
+  const { value, onChange, onSearch, loading } = useSearch();
+  const { update } = usePageCtx([]);
   return (
     <div style={props.style} className={props.className}>
       <Search
@@ -17,10 +18,12 @@ export const TableHeader: FC<IProps> = function (props) {
         placeholder="请输入"
         allowClear
         enterButton="查询"
-        // size="large"
-        onSearch={() => {
-          console.log("ok");
+        value={value}
+        onChange={(e) => {
+          onChange(e.target.value);
         }}
+        onSearch={onSearch}
+        loading={loading}
       />
       <Button
         type={"primary"}

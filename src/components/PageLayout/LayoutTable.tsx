@@ -6,6 +6,7 @@ export const LayoutTable = styled.div`
   height: 100%;
   background-color: #fff;
   padding: 24px;
+  overflow: auto;
   .lay-header {
     margin-bottom: 24px;
     .f-item {
