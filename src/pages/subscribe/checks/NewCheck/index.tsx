@@ -1,47 +1,50 @@
-import React, { CSSProperties, FC } from "react";
-import { Form, Modal, message } from "antd";
-import { usePageCtx } from "@/pages/subscribe/checks/context";
+import React, { CSSProperties, FC, useEffect } from "react";
+import { Form, Modal } from "antd";
 import { NewForm } from "./NewForm";
-import { CheckItem, IniCheckItem } from "@/pages/subscribe/checks/constants";
-import { addCheckItem } from "../services";
+import {CheckItem, IniCheckItem} from "@/pages/subscribe/checks/constants";
+import { addCheckItem, updateItem } from "../services";
 import "./index.scss";
+import { useCrudModalState } from "@/hooks/page";
+
 
 interface IProps {
   style?: CSSProperties;
   className?: string;
 }
-export const NewCheck: FC<IProps> = function (props) {
-  const { state, update } = usePageCtx(["visible"]);
+export const NewCheck: FC<IProps> = function () {
+  const { editItem, visible, close } = useCrudModalState(IniCheckItem);
   const [form] = Form.useForm<CheckItem>();
+
+  useEffect(() => {
+    form.setFieldsValue(editItem);
+  }, [editItem, form]);
 
   return (
     <Modal
-      visible={state.visible}
-      title={state.data ? "编辑检查项" : "新增检查项"}
+      visible={visible}
+      title={editItem ? "编辑检查项" : "新增检查项"}
       mask={true}
+      destroyOnClose={true}
       style={{ top: 40 }}
       onOk={() => {
         const vs = form.getFieldsValue();
-        addCheckItem(vs).then((r) => {
-          if (!r.flag) {
-            return message.error(r.message);
-          }
-          message.success(r.message);
-          update((s) => {
-            s.visible = false;
-            s.data = null;
-            s.updateList += 1;
+        if (editItem?.id) {
+          vs.id = editItem.id;
+          updateItem(vs).then((res) => {
+            close();
           });
-        });
+        } else {
+          addCheckItem(vs).then((r) => {
+            close();
+          });
+        }
       }}
       width={600}
       onCancel={() => {
-        update((s) => {
-          s.visible = false;
-        });
+        close();
       }}
     >
-      <NewForm iniValues={IniCheckItem} form={form} />
+      <NewForm iniValues={editItem} form={form} />
     </Modal>
   );
 };

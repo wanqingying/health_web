@@ -1,6 +1,6 @@
 import React, { CSSProperties, FC } from "react";
 import { Input, Button } from "antd";
-import { usePageCtx, useSearch } from "@/pages/subscribe/checks/context";
+import { useCrudParam, useCrudModalState } from "@/hooks/page";
 
 const { Search } = Input;
 
@@ -9,8 +9,8 @@ interface IProps {
   className?: string;
 }
 export const TableHeader: FC<IProps> = function (props) {
-  const { value, onChange, onSearch, loading } = useSearch();
-  const { update } = usePageCtx([]);
+  const { param, onChange } = useCrudParam({ search: "" });
+  const { open } = useCrudModalState();
   return (
     <div style={props.style} className={props.className}>
       <Search
@@ -18,20 +18,15 @@ export const TableHeader: FC<IProps> = function (props) {
         placeholder="请输入"
         allowClear
         enterButton="查询"
-        value={value}
-        onChange={(e) => {
-          onChange(e.target.value);
-        }}
-        onSearch={onSearch}
-        loading={loading}
+        value={param.search}
+        // disabled={disabled}
+        onChange={(e) => onChange("search", e.target.value)}
       />
       <Button
         type={"primary"}
         className={"f-item btn-add"}
         onClick={() => {
-          update((s) => {
-            s.visible = true;
-          });
+          open();
         }}
       >
         新增

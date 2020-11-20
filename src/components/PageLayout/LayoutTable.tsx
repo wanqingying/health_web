@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import React from "react";
 import styled from "styled-components";
 
 export const LayoutTable = styled.div`
@@ -18,5 +18,10 @@ export const LayoutTable = styled.div`
     }
   }
   .lay-table {
+    .btn-act {
+      button:first-child {
+        margin-right: 10px;
+      }
+    }
   }
 `;

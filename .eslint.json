@@ -6,9 +6,10 @@
       "jsx": true
     }
   },
+  "plugins": [
+  ],
   "rules": {
-    "semi": "error",
-    "no-implicit-dependencies": [true, ["src"]],
-    "no-submodule-imports": [true, "src"]
+    "react-hooks/rules-of-hooks": "false", // 检查 Hook 的规则
+    "react-hooks/exhaustive-deps": "false" // 检查 effect 的依赖
   }
 }

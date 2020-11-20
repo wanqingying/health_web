@@ -2,6 +2,7 @@ import React, { useEffect, useContext, createContext } from "react";
 import { isEqual, cloneDeep, pick } from "lodash";
 import axios from "axios";
 import { RouteItem } from "../configs/routes";
+import {message} from "antd";
 
 export const axo = axios.create({
   withCredentials: true,
@@ -15,8 +16,22 @@ export interface ResultX<T> {
   message: string;
 }
 export type Result<T> = Promise<ResultX<T>>;
-export type PageResult<T> = Promise<{ total: number; rows: Array<T> }>;
+export interface PageRows<T> {
+  total:number
+  rows:Array<T>
+}
+export type PageResult<T> = Promise<PageRows<T>>;
 export type Service<P, S> = (param: P) => Result<S>;
+
+export function showActionTip(res: ResultX<any>) {
+  if (res?.flag) {
+    message.success(res.message);
+  } else {
+    message.error(res.message);
+  }
+}
+
+
 
 class CtxState<T> {
   state: T;

@@ -3,6 +3,7 @@ import { Form, Input, Select, InputNumber } from "antd";
 import { CheckItem, CheckItemFields } from "@/pages/subscribe/checks/constants";
 import { ESexTypes, ECheckTypes } from "@/utils/constants";
 import { FormInstance } from "antd/lib/form";
+import {SelectX} from "@/components/AntdLib/Select";
 
 interface IProps {
   style?: CSSProperties;
@@ -29,13 +30,13 @@ export const NewForm: FC<IProps> = function (props) {
       {/*  <Input />*/}
       {/*</Form.Item>*/}
       <Form.Item label={"适用性别"} name={CheckItemFields.sex}>
-        <Select options={ESexTypes} />
+        <SelectX options={ESexTypes} />
       </Form.Item>
       <Form.Item label={"适用年龄"} name={CheckItemFields.age}>
         <InputNumber min={0} max={100} />
       </Form.Item>
       <Form.Item label={"类型"} name={CheckItemFields.type}>
-        <Select options={ECheckTypes} />
+        <SelectX options={ECheckTypes} />
       </Form.Item>
       <Form.Item label={"价格"} name={CheckItemFields.price}>
         <InputNumber min={0} max={999999} />

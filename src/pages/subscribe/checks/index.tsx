@@ -1,17 +1,24 @@
 import React, { FC } from "react";
 import { LayoutTable } from "@/components/PageLayout/LayoutTable";
 import { TableHeader } from "./TabelHeader";
-import { Table, Button } from "antd";
-import { ProviderPage, useTableData } from "./context";
+import { Table, Button, Popconfirm } from "antd";
+import { ProviderPage } from "./context";
 import { NewCheck } from "./NewCheck";
+import {
+  ProviderCrud,
+  useCrudTableAction,
+  useCrudTableState,
+} from "@/hooks/page";
+import * as api from "./services";
 
 import { ColumnProps } from "antd/lib/table";
 import { CheckItem } from "@/pages/subscribe/checks/constants";
-import { ECheckTypesMap, ESexTypeMap } from "@/utils/constants";
+import { ECheckTypeLabel, ESexTypeLabel } from "@/utils/constants";
 
 interface IProps {}
 export const Checks: FC<IProps> = function () {
-  const { data, pagination, loading } = useTableData();
+  const { data, pagination, loading } = useCrudTableState();
+  const { editItem, deleteItem } = useCrudTableAction();
   const columns: ColumnProps<CheckItem>[] = [
     {
       title: "项目编码",
@@ -28,7 +35,7 @@ export const Checks: FC<IProps> = function () {
     {
       title: "项目类型",
       render: (_, item) => {
-        return ECheckTypesMap.get(item.type);
+        return ECheckTypeLabel[item.type];
       },
     },
     {
@@ -40,7 +47,7 @@ export const Checks: FC<IProps> = function () {
     {
       title: "适用性别",
       render: (_, item) => {
-        return ESexTypeMap.get(item.sex);
+        return ESexTypeLabel[item.sex];
       },
     },
     {
@@ -63,10 +70,27 @@ export const Checks: FC<IProps> = function () {
     },
     {
       title: "操作",
-      render() {
+      render(_, item) {
         return (
-          <span>
-            <Button size={"small"}>编辑</Button>
+          <span className={"btn-act"}>
+            <Button
+              size={"small"}
+              onClick={() => {
+                editItem(item);
+              }}
+            >
+              编辑
+            </Button>
+            <Popconfirm
+              title={"确认删除?"}
+              onConfirm={() => {
+                deleteItem(item.id);
+              }}
+            >
+              <Button size={"small"} style={{ color: "red" }}>
+                删除
+              </Button>
+            </Popconfirm>
           </span>
         );
       },
@@ -90,7 +114,16 @@ export const Checks: FC<IProps> = function () {
 export default () => {
   return (
     <ProviderPage>
-      <Checks />
+      <ProviderCrud
+        value={{
+          ApiAddItem: api.addCheckItem,
+          ApiDelItem: api.deleteById,
+          ApiEditItem: api.updateItem,
+          ApiPageList: api.getItemList,
+        }}
+      >
+        <Checks />
+      </ProviderCrud>
     </ProviderPage>
   );
 };
