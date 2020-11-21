@@ -74,7 +74,7 @@ export function useCrudTableState() {
     });
     const param = pageParam || {};
     state
-      .ApiPageList({ size: pageSize, current: state.pageIndex, ...param })
+      .ApiPageList({ pageSize: pageSize, pageIndex: state.pageIndex, ...param })
       .then((res) => {
         if (res) {
           update((s) => {

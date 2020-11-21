@@ -9,13 +9,13 @@ export function addCheckItem(param: CheckItem): Result<number> {
 }
 
 export function getItemList(param: any): PageResult<CheckItem> {
-  return axo.post("/checks/list", param).then((res) => {
+  return axo.post("/checks/page", param).then((res) => {
     return res.data;
   });
 }
 
 export function deleteById(id: any): Result<any> {
-  return axo.get("/checks/delete?id=" + id).then((res) => {
+  return axo.get("/checks/remove?id=" + id).then((res) => {
     showActionTip(res.data);
     return res.data;
   });

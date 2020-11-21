@@ -3,19 +3,19 @@ import { LayoutTable } from "@/components/PageLayout/LayoutTable";
 import { TableHeader } from "./TabelHeader";
 import { TableList } from './TableList';
 import { ProviderPage } from "./context";
-import { NewCheck } from "./NewCheck";
+import { NewRecord } from "./NewRecord";
 import {
   ProviderCrud,
 } from "@/hooks/page";
 import * as api from "./services";
 
 interface IProps {}
-export const Checks: FC<IProps> = function () {
+export const Groups: FC<IProps> = function () {
   return (
     <LayoutTable>
       <TableHeader className={"lay-header"} />
       <TableList />
-      <NewCheck />
+      <NewRecord />
     </LayoutTable>
   );
 };
@@ -25,13 +25,13 @@ export default () => {
     <ProviderPage>
       <ProviderCrud
         value={{
-          ApiAddItem: api.addCheckItem,
+          ApiAddItem: api.add,
           ApiDelItem: api.deleteById,
           ApiEditItem: api.updateItem,
           ApiPageList: api.getItemList,
         }}
       >
-        <Checks />
+        <Groups />
       </ProviderCrud>
     </ProviderPage>
   );

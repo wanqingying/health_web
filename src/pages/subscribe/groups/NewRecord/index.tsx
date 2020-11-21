@@ -1,8 +1,8 @@
 import React, { CSSProperties, FC, useEffect } from "react";
 import { Form, Modal } from "antd";
 import { NewForm } from "./NewForm";
-import {CheckItem, IniCheckItem} from "@/pages/subscribe/checks/constants";
-import { addCheckItem, updateItem } from "../services";
+import {CheckGroup, IniCheckItem} from "../constants";
+import { add, updateItem } from "../services";
 import "./index.scss";
 import { useCrudModalState } from "@/hooks/page";
 
@@ -11,9 +11,9 @@ interface IProps {
   style?: CSSProperties;
   className?: string;
 }
-export const NewCheck: FC<IProps> = function () {
+export const NewRecord: FC<IProps> = function () {
   const { editItem, visible, close } = useCrudModalState(IniCheckItem);
-  const [form] = Form.useForm<CheckItem>();
+  const [form] = Form.useForm<CheckGroup>();
 
   useEffect(() => {
     form.setFieldsValue(editItem);
@@ -22,7 +22,7 @@ export const NewCheck: FC<IProps> = function () {
   return (
     <Modal
       visible={visible}
-      title={editItem ? "编辑检查组" : "新增检查组"}
+      title={editItem ? "编辑检查项" : "新增检查项"}
       mask={true}
       destroyOnClose={true}
       style={{ top: 40 }}
@@ -34,7 +34,7 @@ export const NewCheck: FC<IProps> = function () {
             close();
           });
         } else {
-          addCheckItem(vs).then((r) => {
+          add(vs).then((r) => {
             close();
           });
         }

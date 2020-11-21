@@ -1,11 +1,13 @@
+// 检查项
+
 export interface CheckItem {
   id?: number;
   code: string;
   name: string;
+  type: number;
   sex: number;
   age: number;
   price: number;
-  type: number;
   attention: string;
   remark: string;
 }
@@ -31,3 +33,7 @@ export const CheckItemFields = {
   attention: "attention",
   remark: "remark",
 };
+
+
+
+
