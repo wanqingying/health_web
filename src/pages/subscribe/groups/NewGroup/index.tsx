@@ -1,17 +1,17 @@
 import React, { CSSProperties, FC, useEffect } from "react";
 import { Form, Modal } from "antd";
 import { NewForm } from "./NewForm";
-import {CheckGroup, IniCheckItem} from "../constants";
+import { CheckGroup, IniCheckItem } from "../constants";
 import { add, updateItem } from "../services";
 import "./index.scss";
 import { useCrudModalState } from "@/hooks/page";
-
+import { ProviderForm } from "./context";
 
 interface IProps {
   style?: CSSProperties;
   className?: string;
 }
-export const NewRecord: FC<IProps> = function () {
+export const NewGroup: FC<IProps> = function () {
   const { editItem, visible, close } = useCrudModalState(IniCheckItem);
   const [form] = Form.useForm<CheckGroup>();
 
@@ -44,7 +44,9 @@ export const NewRecord: FC<IProps> = function () {
         close();
       }}
     >
-      <NewForm iniValues={editItem} form={form} />
+      <ProviderForm value={{ form: form, iniValues: editItem }}>
+        <NewForm />
+      </ProviderForm>
     </Modal>
   );
 };

@@ -3,21 +3,13 @@ import React from "react";
 import { CheckGroup, IniCheckItem } from "./constants";
 
 export interface PageState {
-  visible: boolean;
-  data: CheckGroup;
-  updateList: number;
-  search: string;
-  loadingList: boolean;
-  current: number;
+  checkItems: string[];
+  items: string[];
 }
 
 const iniState: PageState = {
-  visible: false,
-  data: IniCheckItem,
-  updateList: 1,
-  search: "",
-  loadingList: false,
-  current: 1,
+  checkItems: [],
+  items: [],
 };
 
 const { Provider, useCtx } = getCtx<PageState>(iniState);

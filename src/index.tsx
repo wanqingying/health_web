@@ -58,7 +58,7 @@ function RouteSwitch(props: { routes: RouteItem[]; parentPath?: string }) {
       {props.routes
         .map((r) => {
           if (r.redirect) {
-            return <Redirect to={r.redirect} from={r.path} />;
+            return <Redirect key={r.path} to={r.redirect} from={r.path} />;
           }
 
           if (r.routes && r.routes.length > 0) {

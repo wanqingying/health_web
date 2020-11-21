@@ -3,7 +3,7 @@ import { LayoutTable } from "@/components/PageLayout/LayoutTable";
 import { TableHeader } from "./TabelHeader";
 import { TableList } from './TableList';
 import { ProviderPage } from "./context";
-import { NewRecord } from "./NewRecord";
+import { NewGroup } from "./NewGroup";
 import {
   ProviderCrud,
 } from "@/hooks/page";
@@ -15,7 +15,7 @@ export const Groups: FC<IProps> = function () {
     <LayoutTable>
       <TableHeader className={"lay-header"} />
       <TableList />
-      <NewRecord />
+      <NewGroup />
     </LayoutTable>
   );
 };

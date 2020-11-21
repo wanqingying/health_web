@@ -1,5 +1,6 @@
 import { axo, PageResult, Result, showActionTip } from "@/utils/help";
 import { CheckGroup } from "@/pages/subscribe/groups/constants";
+import { CheckItem } from "@/pages/subscribe/checks/constants";
 
 export function add(param: CheckGroup): Result<number> {
   return axo.post("/groups/add?name=xh", param).then((res) => {
@@ -31,6 +32,18 @@ export function updateItem(item: CheckGroup): Result<boolean> {
     .catch((e) => {
       console.log("err", e);
     });
+}
+
+export function getAllCheckItems(): Result<CheckItem[]> {
+  return axo.get("/checks/all").then((res) => {
+    return res.data;
+  });
+}
+
+export function getCheckItemsByGroupId(id: any): Result<number[]> {
+  return axo.get("/checks/findByGroupId?groupId=" + id).then((res) => {
+    return res.data;
+  });
 }
 
 export function getItemById(id: any) {}

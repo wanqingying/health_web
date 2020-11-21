@@ -1,14 +1,17 @@
 // 检查组
 
+import { CheckItem } from "@/pages/subscribe/checks/constants";
 
 export interface CheckGroup {
   id?: number;
   code: string;
-  helpcode:string;
+  helpcode: string;
   name: string;
   sex: number;
   attention: string;
   remark: string;
+  checkitems?: CheckItem[];
+  checkitemIds?:string[]
 }
 export const IniCheckItem: CheckGroup = {
   code: "xy_code",
@@ -22,16 +25,16 @@ export const IniCheckItem: CheckGroup = {
 export const ECheckGroupFields = {
   code: "code",
   name: "name",
-  sex: 'sez',
-  helpCode: "helpCode",
+  sex: "sex",
+  helpcode: "helpcode",
   attention: "attention",
   remark: "remark",
 };
-export const ECheckGroupLabels={
+export const ECheckGroupLabels = {
   code: "编号",
   name: "名称",
-  sex: '适用性别',
+  sex: "适用性别",
   helpcode: "助记名",
   attention: "项目说明",
   remark: "注意事项",
-}
+};

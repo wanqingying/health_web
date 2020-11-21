@@ -1,21 +1,20 @@
 import React, { CSSProperties, FC } from "react";
 import { Form, Input } from "antd";
-import { CheckGroup, ECheckGroupFields, ECheckGroupLabels } from "../constants";
+import { ECheckGroupFields, ECheckGroupLabels } from "../constants";
 import { ESexTypes } from "@/utils/constants";
-import { FormInstance } from "antd/lib/form";
 import { SelectX } from "@/components/AntdLib/Select";
+import { userFormCtx } from "./context";
 
 interface IProps {
   style?: CSSProperties;
   className?: string;
-  form: FormInstance;
-  iniValues: CheckGroup;
 }
-export const NewForm: FC<IProps> = function (props) {
-  const form = props.form;
+export const FormBase: FC<IProps> = function (props) {
+  const { state } = userFormCtx(["form", "iniValues"]);
+  const { form, iniValues } = state;
   return (
     <Form
-      initialValues={props.iniValues}
+      initialValues={iniValues}
       form={form}
       labelCol={{ span: 4 }}
       wrapperCol={{ span: 16 }}
@@ -26,7 +25,7 @@ export const NewForm: FC<IProps> = function (props) {
       <Form.Item label={ECheckGroupLabels.name} name={ECheckGroupFields.name}>
         <Input />
       </Form.Item>
-      <Form.Item label={"助记名"} name={ECheckGroupFields.helpCode}>
+      <Form.Item label={"助记名"} name={ECheckGroupFields.helpcode}>
         <Input />
       </Form.Item>
       <Form.Item label={"适用性别"} name={ECheckGroupFields.sex}>
