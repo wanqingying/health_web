@@ -46,4 +46,10 @@ export function getCheckItemsByGroupId(id: any): Result<number[]> {
   });
 }
 
+export function getAllCheckGroups():Result<CheckGroup[]> {
+  return axo.get("/groups/all").then((res) => {
+    return res.data;
+  });
+}
+
 export function getItemById(id: any) {}

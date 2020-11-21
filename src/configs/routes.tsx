@@ -46,6 +46,11 @@ export const routeConfig: RouteItem[] = [
     label: "预约管理",
     routes: [
       {
+        path: "/subscribe/meals",
+        label: "套餐管理",
+        component: lazy(() => import("../pages/subscribe/meals")),
+      },
+      {
         path: "/subscribe/groups",
         label: "检查组管理",
         component: lazy(() => import("../pages/subscribe/groups")),
